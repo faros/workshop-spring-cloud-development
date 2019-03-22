@@ -3,10 +3,12 @@ package com.example.productservice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +55,22 @@ class initializer implements ApplicationRunner {
 interface ProductRepository extends JpaRepository<Product, Long> {
 	// select * from products where product_name = name;
 	Collection<Product> findByName(String name);
+}
+
+@RestController
+@RefreshScope
+class msgRestController {
+
+	private final String message;
+
+	public msgRestController(@Value("${message}") String msg) {
+		this.message = msg;
+	}
+
+	@GetMapping("/message")
+	public String read() {
+		return this.message;
+	}
 }
 
 @RestController
