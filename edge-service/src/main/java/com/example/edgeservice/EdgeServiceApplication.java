@@ -82,10 +82,10 @@ interface ProductClient {
 }
 
 @RestController
-class GiftApiAdapterRestController {
+class ProductApiAdapterRestController {
 	private final ProductClient productClient;
 
-	public GiftApiAdapterRestController(ProductClient productClient) {
+	public ProductApiAdapterRestController(ProductClient productClient) {
 		this.productClient = productClient;
 	}
 
